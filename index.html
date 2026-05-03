@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Kalkulator Pupuk</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6') no-repeat center center/cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Nama di atas */
+.nama {
+    position: absolute;
+    top: 20px;
+    text-align: center;
+    width: 100%;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+/* Container utama */
+.container {
+    position: relative;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background: green;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: darkgreen;
+}
+
+.hasil {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+/* Gambar tanaman */
+.tanaman {
+    position: absolute;
+    width: 70px;
+}
+
+/* Posisi tanaman */
+.padi {
+    top: -30px;
+    left: -30px;
+}
+
+.jagung {
+    top: -30px;
+    right: -30px;
+}
+
+.kedelai {
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* ===== TAMBAHAN ANIMASI ===== */
+
+/* Smooth + animasi goyang */
+.tanaman {
+    transition: transform 0.3s ease;
+    animation: goyang 3s infinite ease-in-out;
+}
+
+/* Hover hidup */
+.tanaman:hover {
+    transform: scale(1.2) rotate(5deg);
+}
+
+/* Animasi goyang */
+@keyframes goyang {
+    0% { transform: rotate(0deg); }
+    50% { transform: rotate(3deg); }
+    100% { transform: rotate(0deg); }
+}
+</style>
+
+</head>
+<body>
+
+<div class="nama">Dicky Ananda</div>
+
+<div class="container">
+
+    <!-- Gambar tanaman -->
+    <img src="https://cdn-icons-png.flaticon.com/512/2909/2909766.png" class="tanaman padi">
+    <img src="https://cdn-icons-png.flaticon.com/512/2909/2909771.png" class="tanaman jagung">
+    <img src="https://cdn-icons-png.flaticon.com/512/2909/2909780.png" class="tanaman kedelai">
+
+    <h2>Kalkulator Pupuk 🌾</h2>
+
+    <input type="number" id="luas" placeholder="Masukkan luas lahan (ha)">
+
+    <select id="tanaman">
+        <option value="">-- Pilih Tanaman --</option>
+        <option value="padi">Padi</option>
+        <option value="jagung">Jagung</option>
+        <option value="kedelai">Kedelai</option>
+    </select>
+
+    <button onclick="hitung()">Hitung</button>
+
+    <div class="hasil" id="output"></div>
+</div>
+
+<script>
+// Nama: Dicky
+// NIM: XXXXX
+
+function hitung() {
+    let luasLahan = parseFloat(document.getElementById("luas").value);
+    let jenisTanaman = document.getElementById("tanaman").value;
+
+    let kebutuhanPerHektar;
+    let totalPupuk;
+    let output = document.getElementById("output");
+
+    if (jenisTanaman === "padi") {
+        kebutuhanPerHektar = 50;
+    } else if (jenisTanaman === "jagung") {
+        kebutuhanPerHektar = 40;
+    } else if (jenisTanaman === "kedelai") {
+        kebutuhanPerHektar = 30;
+    } else {
+        output.innerHTML = "Jenis tanaman tidak dikenali!";
+        return;
+    }
+
+    totalPupuk = luasLahan * kebutuhanPerHektar;
+
+    let kategori = "";
+
+    if (totalPupuk > 100) {
+        kategori = "Kebutuhan pupuk Anda tinggi, pastikan stok cukup.";
+    } else if (totalPupuk >= 50 && totalPupuk <= 100) {
+        kategori = "Kebutuhan pupuk Anda sedang.";
+    } else {
+        kategori = "Kebutuhan pupuk Anda rendah.";
+    }
+
+    output.innerHTML = 
+        "Total kebutuhan pupuk: " + totalPupuk + " kg<br>" + kategori;
+}
+</script>
+
+</body>
+</html>
